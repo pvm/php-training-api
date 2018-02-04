@@ -1,3 +1,6 @@
+env:
+  global:
+    - CC_TEST_REPORTER_ID=081010794889c1783e2b66af450b23c573ce6bbd9269e26845f1da7dc9893202
 # Project language
 language: php
 
@@ -24,6 +27,14 @@ before-install:
 install:
   - composer install
 
+before_script:
+- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+- chmod +x ./cc-test-reporter
+- ./cc-test-reporter before-build
+
 # Run script
 script:
-  - ./bin/phpunit
+  - ./bin/phpunit --coverage-clover clover.xml
+
+after_script:
+- ./cc-test-reporter after-build --coverage-input-type clover --id 12345 --exit-code $TRAVIS_TEST_RESULT
