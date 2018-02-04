@@ -1,0 +1,29 @@
+# Project language
+language: php
+
+# Start mysql service
+services:
+  - mysql
+
+# Cache composer packages so "composer install" is faster
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+
+# Settings version PHP
+php:
+  - 7.1
+  - 7.2
+
+# Update composer
+before-install:
+  - composer self-update
+
+# Install composer dependencies,
+# Create database, schema and fixtures
+install:
+  - composer install
+
+# Run script
+script:
+  - ./bin/phpunit
