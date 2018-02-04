@@ -1,4 +1,5 @@
 .idea/
+/tests/ci/
 
 ###> symfony/framework-bundle ###
 .env
