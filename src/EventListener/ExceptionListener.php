@@ -9,25 +9,27 @@ class ExceptionListener
 {
     public function onKernelException(GetResponseForExceptionEvent $event)
     {
+        // If dev is enabled, return exception with details
+        if (getenv('APP_ENV') == 'dev') {
+            return;
+        }
+
         // You get the exception object from the received event
         $exception = $event->getException();
-        $message = sprintf(
-            'My Error says: %s with code: %s',
-            $exception->getMessage(),
-            $exception->getCode()
-        );
 
-        // Customize your response object to display the exception details
+        // Define Response
         $response = new JsonResponse();
-        $response->setContent($message);
+        $response
+            ->setStatusCode(JsonResponse::HTTP_INTERNAL_SERVER_ERROR)
+            ->setContent([
+                'code' => $exception->getCode(),
+                'message' => $exception->getMessage()
+            ]);
 
-        // HttpExceptionInterface is a special type of exception that
-        // holds status code and header details
+        // HttpExceptionInterface is a special type of exception that holds status code and header details
         if ($exception instanceof HttpExceptionInterface) {
             $response->setStatusCode($exception->getStatusCode());
             $response->headers->replace($exception->getHeaders());
-        } else {
-            $response->setStatusCode(JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         // Send the modified response object to the event

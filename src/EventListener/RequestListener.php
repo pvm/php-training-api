@@ -22,7 +22,7 @@ class RequestListener
     {
         if ($content = $request->getContent()) {
             $data = json_decode($content, true);
-            $request->attributes->replace($data);
+            $request->request->replace($data);
         }
     }
 }
