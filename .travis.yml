@@ -1,15 +1,41 @@
 env:
   global:
-    - GIT_COMMITTED_AT=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then git log -1 --pretty=format:%ct; else git log -1 --skip 1 --pretty=format:%ct; fi)
+    - CC_TEST_REPORTER_ID=2eb79c71ae885575fdc12f9779d6c463241b807acf8caace9a0edbb0434f197f
+# Project language
 language: php
+
+# Start mysql service
+services:
+  - mysql
+
+# Cache composer packages so "composer install" is faster
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+
+# Settings version PHP
 php:
-  - 7.0
+  - 7.1
+  - 7.2
+
+# Update composer
+before-install:
+  - composer self-update
+
+# Install composer dependencies,
+# Create database, schema and fixtures
+install:
+  - composer install
+
 before_script:
-  - "composer require codeclimate/php-test-reporter --dev"
-  - "composer install"
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
+- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+- chmod +x ./cc-test-reporter
+- mv phpunit.xml.dist phpunit.xml
+- ./cc-test-reporter before-build
+
+# Run script
 script:
-  - "./bin/phpunit --testsuite=unit --coverage-text --coverage-clover build/logs/clover.xml"
-  - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
+  - ./bin/phpunit --coverage-clover clover.xml
+
+after_script:
+- ./cc-test-reporter after-build --debug --coverage-input-type clover --exit-code $TRAVIS_TEST_RESULT
