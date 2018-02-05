@@ -1,6 +1,3 @@
-env:
-  global:
-    - CC_TEST_REPORTER_ID=081010794889c1783e2b66af450b23c573ce6bbd9269e26845f1da7dc9893202
 # Project language
 language: php
 
