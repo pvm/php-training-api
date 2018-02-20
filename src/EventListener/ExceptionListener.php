@@ -21,7 +21,7 @@ class ExceptionListener
         $response = new JsonResponse();
         $response
             ->setStatusCode(JsonResponse::HTTP_INTERNAL_SERVER_ERROR)
-            ->setContent([
+            ->setData([
                 'code' => $exception->getCode(),
                 'message' => $exception->getMessage()
             ]);
