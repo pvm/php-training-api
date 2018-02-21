@@ -30,7 +30,7 @@ before_script:
 - chmod +x ./cc-test-reporter
 - ./cc-test-reporter before-build
 - ./bin/console d:d:c
-- ./bin/console d:m:m
+- ./bin/console d:m:m --no-interaction
 
 # Run script
 script:
