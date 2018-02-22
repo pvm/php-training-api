@@ -9,8 +9,8 @@ class ExceptionListener
 {
     public function onKernelException(GetResponseForExceptionEvent $event)
     {
-        // If dev is enabled, return exception with details
-        if (getenv('APP_ENV') == 'dev') {
+        // If debug is enabled, return exception with details
+        if (getenv('APP_DEBUG') == true) {
             return;
         }
 
@@ -29,7 +29,6 @@ class ExceptionListener
         // HttpExceptionInterface is a special type of exception that holds status code and header details
         if ($exception instanceof HttpExceptionInterface) {
             $response->setStatusCode($exception->getStatusCode());
-            $response->headers->replace($exception->getHeaders());
         }
 
         // Send the modified response object to the event
