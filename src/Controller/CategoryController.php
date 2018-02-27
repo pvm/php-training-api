@@ -77,7 +77,7 @@ class CategoryController extends Controller
             $em->flush();
         }
 
-        return $this->json($category);
+        return $this->json($category, 201);
     }
 
     /**
