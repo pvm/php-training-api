@@ -18,17 +18,6 @@ class Category extends SerializableEntity
     use Timestamps;
 
     /**
-     * Define what attributes will be serializable
-     *
-     * @var array
-     */
-    protected $serializable = [
-        'id',
-        'name',
-        'description'
-    ];
-
-    /**
      * @ORM\Id
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -109,5 +98,17 @@ class Category extends SerializableEntity
     {
         $this->description = $description;
         return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function getSerializableFields(): array
+    {
+        return [
+            'id',
+            'name',
+            'description'
+        ];
     }
 }

@@ -7,13 +7,6 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 abstract class SerializableEntity implements \JsonSerializable
 {
     /**
-     * Attributes that should be serializable for API expose
-     *
-     * @var array
-     */
-    protected $serializable = [];
-
-    /**
      * Get the only the serializable fields and return as a array
      *
      * @return array
@@ -35,8 +28,5 @@ abstract class SerializableEntity implements \JsonSerializable
      *
      * @return array
      */
-    private function getSerializableFields()
-    {
-        return $this->serializable;
-    }
+    abstract protected function getSerializableFields() : array;
 }
