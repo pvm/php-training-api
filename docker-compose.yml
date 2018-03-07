@@ -13,3 +13,4 @@ services:
       MYSQL_PASSWORD: "dev"
     volumes:
       - /var/lib/mysql
+      - ./config/packages/dev/init.sql:/docker-entrypoint-initdb.d/init.sql
