@@ -22,7 +22,8 @@ class CategoryType extends AbstractType
                     'constraints' => [
                         new Length(['min' => 5, 'max' => 50])
                     ]
-                ])
+                ]
+            )
             ->add(
                 'description',
                 TextType::class,
