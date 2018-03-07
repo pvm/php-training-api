@@ -20,8 +20,7 @@ class CategoryFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        foreach($this->data() as $data){
-
+        foreach($this->data() as $data) {
             $category = new Category();
             $category
                 ->setName($data['name'])
