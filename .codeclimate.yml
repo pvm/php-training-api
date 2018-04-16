@@ -1,0 +1,32 @@
+version: "2"
+exclude_patterns:
+ - "/bin/**"
+ - "/config/**"
+ - "/public/**"
+ - "/var/**"
+ - "/vendor/**"
+ - ".*"
+ - "**/**.yml"
+ - "**/**.md"
+ - "**/**.lock"
+ - "**/**.json"
+ - "**/**.dist"
+ - "**/**.xml"
+plugins:
+  phpcodesniffer:
+    enabled: true
+    config:
+      file_extensions: "php"
+      standard: "PSR1,PSR2"
+      ignore_warnings: true
+      encoding: utf-8
+  phpmd:
+    enabled: true
+    config:
+      file_extensions: "php"
+      rulesets: "unusedcode,codesize,naming,design,controversial"
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - php:
